@@ -1,0 +1,104 @@
+/* frontend/src/pages/ElectionDetailPage.css */
+
+.election-detail-page-container h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+.election-detail-page-container .election-description {
+    text-align: center;
+    color: #555;
+    margin-bottom: 20px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.voting-form h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.candidates-horizontal-container {
+    display: flex; /* Key for horizontal layout */
+    flex-wrap: wrap; /* Allow items to wrap to next line on smaller screens */
+    gap: 20px; /* Space between candidate cards */
+    justify-content: center; /* Center cards if they don't fill the row */
+    margin-bottom: 20px;
+}
+
+.candidate-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: 200px; /* Adjust as needed, or use flex-basis */
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    background-color: #fff;
+    position: relative; /* For absolute positioning of radio if needed */
+}
+
+.candidate-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-card.selected {
+    border-color: #007bff; /* Highlight selected candidate */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    background-color: #e7f3ff; /* Light blue background for selected */
+}
+
+.candidate-radio-input {
+    /* Visually hide the radio button, the card click handles selection */
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.candidate-card-label {
+    display: flex; /* Use flex to arrange items inside the label */
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer; /* Make the label itself clickable */
+    width: 100%;
+    height: 100%;
+}
+
+
+.candidate-photo {
+    width: 120px; /* Adjust size */
+    height: 120px;
+    border-radius: 50%; /* Circular photos */
+    object-fit: cover; /* Crop to fit circle without distortion */
+    margin-bottom: 10px;
+    border: 2px solid #eee;
+    background-color: #f0f0f0; /* Placeholder bg if image is transparent or fails to load */
+}
+
+.candidate-name {
+    font-weight: bold;
+    color: #333;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.candidate-card-description {
+    font-size: 0.85em;
+    color: #666;
+    min-height: 40px; /* Give some space for description or keep it consistent */
+    line-height: 1.4;
+}
+
+.vote-actions-footer {
+    text-align: center; /* Center the "Cast Your Vote" and "Clear Selection" buttons */
+    margin-top: 30px;
+}
+
+.vote-actions-footer .button-secondary {
+    margin-left: 10px; /* If you don't have a .ml-2 utility class */
+}

@@ -1,0 +1,148 @@
+/* In App.css or ManageElectionsPage.css */
+
+/* --- General Table Styles --- */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Matches your inline style */
+    font-size: 0.95em; /* Matches your inline style */
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.table-header { /* For <th> */
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    background-color: #e9ecef;
+    font-weight: bold;
+}
+
+.table-cell { /* For <td> */
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+/* --- Actions Cell Specifics --- */
+.actions-column-header { /* For the "Actions" <th> */
+    min-width: 320px; /* Or adjust as needed for all buttons */
+    text-align: center !important; /* Center header text */
+}
+
+.actions-cell {
+    min-width: 400px; /* Give the actions column more minimum width */
+    text-align: left; /* Or 'center' if you prefer buttons centered */
+}
+
+.actions-cell .button-link,
+.actions-cell button {
+    display: inline-block;
+    padding: 5px 10px;   /* Slightly smaller padding for more compactness */
+    font-size: 0.8em;   /* Smaller font size */
+    margin-right: 4px;
+    margin-bottom: 4px;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white; 
+    vertical-align: middle;
+    line-height: 1.4; /* Ensure text fits well */
+}
+
+/* In App.css */
+.status-cell div {
+    line-height: 1.4; /* Adjust for better vertical spacing if needed */
+}
+.status-active-indicator {
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 2px;
+}
+
+/* --- Your Global Button Color Classes (ensure these exist and are complete) --- */
+.button-link { /* Base for Link components if they need button-like appearance without specific color */
+    /* ... */
+}
+.button-primary { background-color: #007bff; color: white !important; /* ... other base button styles ... */ }
+.button-secondary { background-color: #6c757d; color: white !important; /* ... */ }
+.button-success { background-color: #28a745; color: white !important; /* ... */ }
+.button-danger { background-color: #dc3545; color: white !important; /* ... */ }
+.button-warning { background-color: #ffc107; color: black !important; /* ... */ }
+.button-info { background-color: #17a2b8; color: white !important; /* ... */ }
+
+/* Custom classes for specific action buttons if generic ones aren't enough */
+.eligibility-button { background-color: #fd7e14 !important; }
+.tally-button { background-color: #5bc0de !important; }
+.results-button { background-color: #6f42c1 !important; }
+.delete-button { background-color: #dc3545 !important; }
+
+/* --- Status Indicators (ensure these are the ones being applied) --- */
+.status-open { 
+    color: #28a745 !important; /* Green text, !important to override if needed */
+    font-weight: bold; 
+    background-color: transparent !important; /* Ensure no background */
+    padding: 0 !important; /* Ensure no extra padding */
+    border-radius: 0 !important; /* Ensure no rounded corners */
+}
+.status-closed { 
+    color: #dc3545 !important; /* Red text */
+    font-weight: bold; 
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* Keep these for Tally Status as they seem fine as text */
+.status-tallied { color: #007bff; font-weight: bold; }
+.status-not-tallied { color: #fd7e14; font-weight: bold; } /* Orange was used before, consistent */
+
+
+/* For the Active/Inactive part in the Status column */
+.status-active { 
+    color: #17a2b8; /* Info blue text, or another color like a subdued green */
+    /* font-weight: bold; /* Optional */
+}
+.status-inactive { 
+    color: #6c757d; /* Secondary grey text */
+    /* font-weight: bold; /* Optional */
+}
+
+/* Specific styling for the status cell if needed */
+.status-cell div { /* If you wrap each status line in a div like my previous suggestion */
+    line-height: 1.3;
+}
+.status-cell .status-active-indicator { /* If you use this class for the (Overall: Active/Inactive) part */
+    font-size: 0.8em;
+    color: #555; /* Slightly dimmer text for secondary status info */
+    margin-top: 2px;
+}
+.status-tallied { color: #007bff; font-weight: bold; }
+.status-not-tallied { color: #fd7e14; font-weight: bold; }
+
+/* --- Modal Footer --- (if not already globally styled) */
+.modal-footer {
+    margin-top: 20px;
+    text-align: right;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+.modal-footer button + button,
+.modal-footer .button-link + button, /* If Link is used as a button */
+.modal-footer button + .button-link {
+    margin-left: 10px;
+}
+
+/* --- Other General Form Group (if not already defined) --- */
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.form-group .mt-1 { margin-top: 0.5rem !important; }
+.form-group .mt-2 { margin-top: 1rem !important; }

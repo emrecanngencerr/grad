@@ -1,0 +1,153 @@
+/* frontend/src/components/ProfileDropdown.css */
+.profile-dropdown-container {
+    position: relative;
+    /* Crucial for positioning the dropdown menu */
+    display: inline-block;
+    /* Or flex, depending on navbar layout */
+}
+
+.profile-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    /* Adjust padding as needed */
+    color: #fff;
+    /* Assuming navbar text is white */
+    border-radius: 4px;
+}
+
+.profile-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Slight hover effect */
+}
+
+.profile-button svg {
+    /* For the default icon */
+    margin-right: 8px;
+    fill: #fff;
+    /* Color for the SVG icon, assuming white text on dark nav */
+    width: 24px;
+    /* Explicit width */
+    height: 24px;
+    /* Explicit height */
+    flex-shrink: 0;
+    /* Prevent icon from shrinking if space is tight */
+}
+
+.profile-avatar-nav {
+    /* Styles for the uploaded profile picture image */
+    width: 30px;
+    /* <<< TRY REDUCING THIS (e.g., 24px, 22px) */
+    height: 30px;
+    /* <<< TRY REDUCING THIS (e.g., 24px, 22px) */
+    border-radius: 50%;
+    /* Make it circular */
+    margin-right: 8px;
+    object-fit: cover;
+    /* Ensures image covers the area without distortion, cropping if necessary */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    /* Optional subtle border, good for dark navs */
+    flex-shrink: 0;
+    /* Prevent image from shrinking */
+    display: block;
+    /* Helps with some layout quirks */
+}
+
+.profile-username-nav {
+    margin-right: 5px;
+    font-size: 0.9em;
+    /* Adjust as needed */
+    white-space: nowrap;
+    /* Prevent name from wrapping if too long */
+    overflow: hidden;
+    /* Hide overflow */
+    text-overflow: ellipsis;
+    /* Add ... if name is too long */
+    max-width: 100px;
+    /* Example max-width, adjust based on your design */
+    line-height: 1.2;
+    /* Ensure text aligns well with icon */
+}
+
+
+.dropdown-arrow {
+    font-size: 0.7em;
+    margin-left: auto;
+    /* Push arrow to the far right of the button if username is short */
+    padding-left: 5px;
+    /* Some space from username */
+    transition: transform 0.2s ease-in-out;
+    line-height: 1.2;
+}
+
+.dropdown-arrow.open {
+    transform: rotate(180deg);
+    /* Arrow points up when open */
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    list-style: none;
+    padding: 8px 0;
+    margin: 5px 0 0 0;
+    min-width: 180px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-menu li {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu li a,
+.dropdown-menu li button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95em;
+    white-space: nowrap;
+    box-sizing: border-box;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-menu li:last-child a,
+.dropdown-menu li:last-child button {
+    border-bottom: none;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li button:hover {
+    background-color: #f5f5f5;
+    /* Hover effect for menu items */
+    color: #007bff;
+}
+
+.dropdown-menu .logout-button {
+    color: #dc3545;
+    /* Red color for logout */
+    font-weight: bold;
+}
+
+.dropdown-menu .logout-button:hover {
+    background-color: #f8d7da;
+    /* Lighter red hover for logout */
+    color: #721c24;
+}

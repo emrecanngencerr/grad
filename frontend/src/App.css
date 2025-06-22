@@ -1,0 +1,511 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* frontend/src/App.css */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6; /* Light grey background */
+    color: #333; /* Default text color */
+}
+
+.container {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* --- Navigation --- */
+nav {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 0;
+    margin-bottom: 20px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center; /* Or flex-start, flex-end */
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a,
+nav ul li button {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1em;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px 0; /* Give buttons some padding to look like links */
+}
+
+nav ul li a:hover,
+nav ul li button:hover {
+    color: #00bcd4; /* A highlight color */
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #ddd; /* Lighter hr */
+    margin-bottom: 20px;
+}
+
+
+/* --- Headings --- */
+h1, h2, h3, h4, h5, h6 {
+    color: #2c3e50; /* Darker blue-grey for headings */
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+}
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.5em; }
+
+
+/* --- Forms --- */
+form div {
+    margin-bottom: 15px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form input[type="datetime-local"],
+form textarea {
+    width: calc(100% - 22px); /* Account for padding and border */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+}
+
+form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+form input[type="checkbox"] {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* --- Buttons --- */
+button,
+a.button-link { /* For Link components styled as buttons */
+    background-color: #007bff; /* Primary blue */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+button:hover,
+a.button-link:hover {
+    background-color: #0056b3; /* Darker blue */
+}
+
+button[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Specific Button Colors (can be classes or target by context) */
+.button-secondary {
+    background-color: #6c757d; /* Grey */
+}
+.button-secondary:hover {
+    background-color: #545b62;
+}
+
+.button-danger {
+    background-color: #dc3545; /* Red */
+}
+.button-danger:hover {
+    background-color: #b02a37;
+}
+
+.button-success {
+    background-color: #28a745; /* Green */
+}
+.button-success:hover {
+    background-color: #1e7e34;
+}
+
+.button-warning {
+    background-color: #ffc107; /* Yellow */
+    color: #212529; /* Dark text for yellow button */
+}
+.button-warning:hover {
+    background-color: #d39e00;
+}
+
+
+/* --- Lists --- */
+ul, ol {
+    padding-left: 20px; /* Standard indent */
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+
+/* --- Tables --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff; /* White background for table */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+th, td {
+    border: 1px solid #e0e0e0;
+    padding: 12px 15px; /* More padding */
+    text-align: center;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #f8f9fa; /* Very light grey for headers */
+    font-weight: bold;
+    color: #495057;
+}
+
+tr:nth-child(even) {
+    background-color: #fdfdfd; /* Subtle striping */
+}
+
+/* --- Links --- */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* --- Utility Classes --- */
+.error-message {
+    color: #dc3545; /* Red for errors */
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.success-message {
+    color: #155724; /* Dark green for success */
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.text-center {
+    text-align: center;
+}
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mr-1 { margin-right: 0.5rem; }
+.mr-2 { margin-right: 1rem; }
+
+/* --- Component Specific Base (can be expanded) --- */
+.login-page, .register-page, .create-election-page, .edit-election-page {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* In App.css or ManageProfilePage.css */
+.profile-avatar-preview {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #eee;
+    display: block; /* Center it if parent has text-align: center */
+    margin: 0 auto 10px auto; /* Center block element */
+}
+
+.profile-avatar-placeholder {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: 0.9em;
+    border: 2px solid #eee;
+    margin: 0 auto 10px auto; /* Center block element */
+}
+
+.profile-picture-section .mb-3 div[style*="textAlign: 'center'"] { /* Target specifically the button div */
+    margin-top: 10px;
+}
+
+.election-list-item {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.election-list-item a {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.election-list-item span {
+    font-size: 0.9em;
+    padding: 3px 8px;
+    border-radius: 10px;
+    color: white;
+}
+.status-open { background-color: #28a745; /* Green */}
+.status-closed { background-color: #dc3545; /* Red */}
+
+.candidate-radio-group div {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+.candidate-radio-group div:hover {
+    background-color: #f9f9f9;
+}
+.candidate-radio-group input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* In App.css or AdminResultsPage.css */
+.admin-results-page h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.chart-container {
+    /* Styles already applied inline, but can be moved here */
+    /* e.g., border: 1px solid #ddd; padding: 10px; background-color: #fff; */
+}
+
+.results-list {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.results-list li:last-child {
+    border-bottom: none;
+}
+
+.info-message { /* Similar to warning/error messages but for neutral info */
+    color: #004085;
+    background-color: #cce5ff;
+    border: 1px solid #b8daff;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+}
+/* In App.css */
+.form-group {
+    margin-bottom: 15px; /* This is your standard gap */
+    /* display: flex; /* Optional: if you want label and input on same line for some setups */
+    /* flex-direction: column; /* If using flex, ensures label is above input */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px; /* Space between label and its input */
+    font-weight: bold;
+    color: #555;
+}
+
+/* Styles for standard inputs */
+form input[type="text"],
+form input[type="password"],
+form input[type="email"],
+form input[type="date"], /* Added type="date" for consistency if you use it elsewhere */
+form textarea {
+    width: calc(100% - 22px); 
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+    box-sizing: border-box; /* Crucial */
+    /* Ensure no extra top/bottom margins on the input itself */
+    margin-top: 0;
+    margin-bottom: 0; 
+}
+
+/* Styles for react-datepicker's input to match other inputs */
+.react-datepicker-wrapper {
+    width: 100%; /* Make the wrapper take full width */
+    display: block; /* Ensure it behaves as a block element */
+}
+
+.react-datepicker-wrapper input.form-input-override {
+    width: 100%; /* The input inside the wrapper should also be full width */
+    padding: 10px !important; /* Match your standard input padding */
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    font-size: 1em !important;
+    box-sizing: border-box !important; /* Crucial */
+    background-color: #fff; 
+    color: #333; 
+    /* Reset any specific margins on this input if it has them */
+    margin-top: 0 !important;
+    margin-bottom: 0 !important; 
+}
+
+/* If react-datepicker__input-container is causing issues */
+.react-datepicker__input-container {
+    width: 100%;
+    display: block; /* Ensure it behaves as block */
+}
+
+/* In App.css or ManageElectionsPage.css */
+
+/* Ensure table cells can accommodate content */
+.manage-elections-page td, 
+.manage-elections-page th {
+    padding: 8px 10px; /* Adjust padding */
+    /* white-space: nowrap; /* Remove this if it's forcing no-wrap */
+}
+
+.actions-cell {
+    min-width: 400px; /* Give the actions column more minimum width, adjust as needed */
+    vertical-align: middle; 
+}
+
+.actions-cell .button-link, /* Target Link components styled as buttons */
+.actions-cell button {
+    display: inline-block; /* Allows margin and padding */
+    padding: 5px 10px;   /* Smaller padding for action buttons */
+    font-size: 0.85em;   /* Smaller font size */
+    margin-right: 5px;   /* Space between buttons */
+    margin-bottom: 5px;  /* Space if they wrap to new line */
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white; /* Default color, specific button classes will override background */
+    vertical-align: middle; /* Align buttons nicely if they have different heights */
+}
+
+.tally-button { background-color: #5bc0de !important; /* Light blue/info */ }
+.results-button { background-color: #6f42c1 !important; /* Purple */ }
+.eligibility-button { background-color: #fd7e14 !important; /* Orange */ }
+.delete-button{ background-color: #dc3545 !important ;}
+
+
+/* For ElectionListPage.js (Badge-like style) */
+.election-list-page .election-list-item .status-badge { /* New wrapper class for specificity */
+    font-size: 0.9em;
+    padding: 3px 8px;
+    border-radius: 10px;
+    color: white;
+    display: inline-block; /* Good for badges */
+}
+.election-list-page .election-list-item .status-badge.status-open { 
+    background-color: #28a745; /* Green background */
+}
+.election-list-page .election-list-item .status-badge.status-closed { 
+    background-color: #dc3545; /* Red background */
+}
+
+
+/* For ManageElectionsPage.js (Text-only style) */
+/* And general use if not wanting a badge */
+.status-open { 
+    color: #28a745 !important; 
+    font-weight: bold; 
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+}
+.status-closed { 
+    color: #dc3545 !important; 
+    font-weight: bold; 
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+}
+

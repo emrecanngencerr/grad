@@ -1,0 +1,250 @@
+.create-election-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.create-election-form {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="datetime-local"],
+.form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.candidates-list {
+    margin: 10px 0;
+}
+
+.candidate-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.candidate-info {
+    flex: 1;
+}
+
+.candidate-info p {
+    margin: 5px 0;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.remove-candidate-btn {
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-candidate-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.submit-btn {
+    background: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.back-btn {
+    background: #757575;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.error-message {
+    color: #ff4444;
+    margin-bottom: 15px;
+}
+
+.success-message {
+    color: #4CAF50;
+    margin-bottom: 15px;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.cancel-btn {
+    background: #757575;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .create-election-container {
+        padding: 10px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        width: 100%;
+    }
+
+    .modal-content {
+        width: 95%;
+        margin: 10px;
+    }
+}
+/* In App.css or CreateElectionPage.css */
+.react-datepicker-wrapper input.form-input-override, /* Targets the input inside DatePicker's wrapper */
+input.form-input-override { /* If DatePicker applies the class directly to its input */
+    width: calc(100% - 22px) !important; /* Full width like other inputs, !important might be needed */
+    padding: 10px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    font-size: 1em !important;
+    box-sizing: border-box !important;
+    background-color: #fff; /* Ensure background is white */
+    color: #333; /* Ensure text color is standard */
+}
+.react-datepicker__input-container input { /* Sometimes this nested input needs styling too */
+     width: 100% !important;
+}
+
+/* Styling for candidate list preview in CreateElectionPage */
+.candidates-list-preview {
+    margin-top: 10px;
+    border: 1px dashed #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    min-height: 50px; /* So it doesn't collapse when empty */
+}
+.candidate-item-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 5px;
+    border-bottom: 1px solid #eee;
+}
+.candidate-item-preview:last-child {
+    border-bottom: none;
+}
+.candidate-info-preview {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.candidate-preview-img-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ddd;
+}
+.candidate-desc-small {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 2px;
+}
+.form-section {
+    margin-bottom: 25px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    background-color: #fdfdfd;
+}
+.form-section h3 {
+    margin-top: 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.checkbox-label input[type="checkbox"] {
+    margin-right: 8px;
+}

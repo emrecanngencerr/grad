@@ -1,0 +1,55 @@
+/* frontend/src/pages/HomePage.css */
+
+.homepage-container {
+    display: flex;
+    flex-direction: column;
+    /* Adjust min-height based on whether App.js nav is sticky or part of viewport calc */
+    /* If App.js nav takes up space, this might be less than 100vh */
+    min-height: calc(90vh - 60px); /* Example: 90% of viewport height minus approx nav height */
+    text-align: center;
+    /* background-color: #eef2f3; -- Moved to body in App.css if you want it global */
+    color: #333;
+    /* The main page "container" class from App.css might handle centering if this component
+       is rendered within that structure. If HomePage is full-width, these styles are fine. */
+}
+
+/* .homepage-header and .homepage-auth-links styles can be REMOVED */
+
+.homepage-main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px; /* More padding for main content */
+}
+
+.homepage-welcome-title {
+    font-size: 2.8em;
+    font-weight: 300;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+.homepage-subtitle {
+    font-size: 1.3em;
+    color: #555;
+    margin-bottom: 35px;
+    max-width: 500px;
+}
+
+.homepage-cta .button-link.button-large {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    /* Uses .button-link styles from App.css */
+}
+
+.homepage-footer {
+    padding: 20px;
+    font-size: 0.9em;
+    color: #777;
+    border-top: 1px solid #ddd;
+    margin-top: auto; 
+    background-color: #f8f9fa; /* Slight distinction for footer */
+}

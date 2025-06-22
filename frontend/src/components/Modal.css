@@ -1,0 +1,71 @@
+/* frontend/src/components/Modal.css */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); /* Dimmed background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Ensure it's on top */
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    min-width: 300px;
+    max-width: 90%; /* Responsive max width */
+    width: 500px; /* Default width */
+    max-height: 90vh;
+    overflow-y: auto; /* Scroll if content is too long */
+    position: relative; /* For positioning the close button */
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.modal-close-button {
+    background: none;
+    border: none;
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1; /* Ensure X is centered */
+}
+.modal-close-button:hover {
+    color: #333;
+}
+
+.modal-body {
+    /* Styles for the content area of the modal */
+    color: #555;
+}
+
+.modal-footer {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    margin-top: 20px;
+    text-align: right; /* Align buttons to the right by default */
+}
+
+.modal-footer button {
+    margin-left: 10px; /* Space between buttons */
+}
