@@ -309,7 +309,7 @@ function AdminResultsPage() {
 
       <div className="page-actions mt-3">
         <button
-          onClick={() => navigate(`/admin/elections/${electionId}`)}
+          onClick={() => navigate("/admin/elections")}
           className="button-secondary mr-1"
         >
           {" "}

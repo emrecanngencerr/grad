@@ -1,7 +1,7 @@
 import axios from "axios";
 import apiClient from "./api";
 
-const API_URL = "http://127.0.0.1:8000/api/";
+const API_URL = "https://gtuevoting.com/api/";
 
 const register = (userData) => {
   return axios.post(API_URL + "register/", userData);

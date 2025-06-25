@@ -1,31 +1,30 @@
-# backend/voting/serializers.py
 from rest_framework import serializers
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
-import json 
-from cryptography.hazmat.primitives import serialization 
-from e_voting.crypto_utils import crypto_utils 
+import json
+from cryptography.hazmat.primitives import serialization
+from e_voting.crypto_utils import crypto_utils
 import base64
-
-from .models import Election, Candidate, Vote, VoteCommitment 
-
-
+ 
+from .models import Election, Candidate, Vote, VoteCommitment
+ 
+ 
 User = get_user_model() # Use your CustomUser model
-
+ 
 # --- Password Reset Serializers ---
 class PasswordResetRequestSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
-
+ 
     def validate_email(self, value):
         return value
-
+ 
 class PasswordResetConfirmSerializer(serializers.Serializer):
     token = serializers.CharField(required=True) # Or UUIDField if your token is a UUID
     new_password1 = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'})
     new_password2 = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'})
-
+ 
     def validate(self, data):
         if data['new_password1'] != data['new_password2']:
             raise serializers.ValidationError({"new_password2": "The two new password fields didn't match."})
@@ -38,39 +37,39 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
         except DjangoValidationError as e:
             raise serializers.ValidationError({'new_password1': list(e.messages)})
         return data
-
+ 
 # --- User Registration and Profile Serializers ---
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(
-        write_only=True, 
-        required=True, 
+        write_only=True,
+        required=True,
         validators=[validate_password], # Django's built-in password validators
         style={'input_type': 'password'}
     )
     password2 = serializers.CharField(
-        write_only=True, 
-        required=True, 
+        write_only=True,
+        required=True,
         label="Confirm password",
         style={'input_type': 'password'}
     )
-
+ 
     class Meta:
-        model = User 
-        fields = ('id', 'email', 'password', 'password2', 
+        model = User
+        fields = ('id', 'email', 'password', 'password2',
           'first_name', 'last_name', 'identity_number', 'birth_date')
         extra_kwargs = {
             'email': {'required': True},
-            'first_name': {'required': True}, 
-            'last_name': {'required': True}, 
+            'first_name': {'required': True},
+            'last_name': {'required': True},
             'identity_number': {'required': True},
             'birth_date': {'required': True}
 }
-
+ 
     def validate_email(self, value):
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError("A user with this email already exists.")
         return value
-
+ 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
             raise serializers.ValidationError({"password2": "Password fields didn't match."})
@@ -88,18 +87,18 @@ class UserSerializer(serializers.ModelSerializer):
             birth_date=validated_data['birth_date']
         )
         return user
-
+ 
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'})
     new_password1 = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'})
     new_password2 = serializers.CharField(required=True, write_only=True, style={'input_type': 'password'})
-
+ 
     def validate_old_password(self, value):
         user = self.context['request'].user
         if not user.check_password(value):
             raise serializers.ValidationError("Your old password was entered incorrectly. Please enter it again.")
         return value
-
+ 
     def validate(self, data):
         if data['new_password1'] != data['new_password2']:
             raise serializers.ValidationError({"new_password2": "The two new password fields didn't match."})
@@ -108,41 +107,41 @@ class ChangePasswordSerializer(serializers.Serializer):
         except DjangoValidationError as e:
             raise serializers.ValidationError({'new_password1': list(e.messages)})
         return data
-
+ 
     def save(self, **kwargs): # Renamed from update to align with Serializer's save method
         user = self.context['request'].user
         user.set_password(self.validated_data['new_password1'])
         user.save()
         # Update session auth hash to prevent logout after password change, if using session auth
         # from django.contrib.auth import update_session_auth_hash
-        # update_session_auth_hash(self.context['request'], user) 
+        # update_session_auth_hash(self.context['request'], user)
         return user
-
+ 
 class UserProfileSerializer(serializers.ModelSerializer):
     profile_picture_url = serializers.SerializerMethodField(read_only=True)
     # 'profile_picture' is for upload. If it's null on PUT/PATCH, it means remove.
     # If it's a file, it means update. If it's not sent, it means keep current.
-    profile_picture = serializers.ImageField(required=False, allow_null=True, use_url=False) 
-
+    profile_picture = serializers.ImageField(required=False, allow_null=True, use_url=False)
+ 
     class Meta:
         model = User
         fields = [
             'id', 'email', 'first_name', 'last_name',
-            'identity_number', 'birth_date', 
+            'identity_number', 'birth_date',
             'is_staff', 'is_active', 'email_verified',
             'profile_picture', 'profile_picture_url'
         ]
         read_only_fields = [
-            'email', 'is_staff', 'is_active', 
+            'email', 'is_staff', 'is_active',
             'email_verified', 'profile_picture_url'
         ]
-
+ 
     def get_profile_picture_url(self, obj):
         request = self.context.get('request')
         if obj.profile_picture and hasattr(obj.profile_picture, 'url'):
             return request.build_absolute_uri(obj.profile_picture.url) if request else obj.profile_picture.url
         return None
-
+ 
     def update(self, instance, validated_data):
         # If profile_picture is None in validated_data, it means client wants to remove it.
         if 'profile_picture' in validated_data and validated_data['profile_picture'] is None:
@@ -154,80 +153,84 @@ class UserProfileSerializer(serializers.ModelSerializer):
                 instance.profile_picture.delete(save=False)
         # Let super().update handle the rest, including new profile_picture file if present
         return super().update(instance, validated_data)
-
-
+ 
+ 
 # --- Candidate Serializers ---
 class CandidateSerializer(serializers.ModelSerializer): # For Admin CRUD on Candidates
     photo_url = serializers.SerializerMethodField(read_only=True)
     election = serializers.PrimaryKeyRelatedField(queryset=Election.objects.all())
     photo = serializers.ImageField(required=False, allow_null=True, use_url=False) # For upload
-
+ 
     class Meta:
         model = Candidate
         fields = ['id', 'name', 'description', 'election', 'photo', 'photo_url']
         # To prevent sending back the raw 'photo' field path and only use 'photo_url':
         # extra_kwargs = {'photo': {'write_only': True}} # Uncomment if you prefer this
-
+ 
     def get_photo_url(self, obj):
         request = self.context.get('request')
         if obj.photo and hasattr(obj.photo, 'url'):
             return request.build_absolute_uri(obj.photo.url) if request else obj.photo.url
         return None
-
+ 
 class AdminCandidateNestedSerializer(serializers.ModelSerializer): # For nesting in Election lists
     photo_url = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Candidate
         fields = ['id', 'name', 'description', 'photo_url'] # Read-only fields for display
-
+ 
     def get_photo_url(self, obj): # Duplicated logic, could be inherited or moved to a mixin
         request = self.context.get('request')
         if obj.photo and hasattr(obj.photo, 'url'):
             return request.build_absolute_uri(obj.photo.url) if request else obj.photo.url
         return None
-
-
+ 
+ 
 # --- Election Serializers ---
 class ElectionSerializer(serializers.ModelSerializer): # For Voters (Read-only perspective)
     candidates = AdminCandidateNestedSerializer(many=True, read_only=True)
     is_open_for_voting = serializers.ReadOnlyField()
-
+ 
     class Meta:
         model = Election
         fields = ['id', 'name', 'description', 'start_time', 'end_time', 'is_active', 'candidates', 'is_open_for_voting']
-
+ 
 class AdminElectionSerializer(serializers.ModelSerializer): # For Admins
     # For READ operations, this will show nested candidates
     candidates = AdminCandidateNestedSerializer(many=True, read_only=True, required=False)
     is_open_for_voting = serializers.ReadOnlyField()
-
+    rsa_public_key_pem = serializers.CharField(read_only=True) # Assuming it's set in perform_create and saved
+    temp_rsa_private_key_pem_for_display = serializers.CharField(read_only=True, required=False)
+ 
     class Meta:
         model = Election
         fields = [
             'id', 'name', 'description', 'start_time', 'end_time',
             'is_active', 'is_open_for_voting',
-            'candidates', # This is read-only based on AdminCandidateNestedSerializer
+            'candidates',
+            'rsa_public_key_pem',
+            'temp_rsa_private_key_pem_for_display',
         ]
     def create(self, validated_data):
         import json
         request = self.context.get('request')
         
-
-        candidates_json_str = request.data.get('candidates_json', '[]') 
+ 
+        candidates_json_str = request.data.get('candidates_json', '[]')
         try:
             candidates_list_data = json.loads(candidates_json_str)
             if not isinstance(candidates_list_data, list):
-                candidates_list_data = [] 
+                candidates_list_data = []
         except json.JSONDecodeError as e:
             print(f"Error parsing candidates_data JSON string: {e}")
             raise serializers.ValidationError({"candidates_json": "Invalid JSON format for candidates."})
-
-
+ 
+ 
         from django.db import transaction
         try:
             with transaction.atomic(): # Start a database transaction
-                election = Election.objects.create(**validated_data) 
-
+                election = Election.objects.create(**validated_data)
+ 
                 for index, cand_data in enumerate(candidates_list_data):
                     photo_file = request.FILES.get(f'candidate_photo_{index}')
                     Candidate.objects.create(
@@ -247,24 +250,24 @@ class AdminElectionSerializer(serializers.ModelSerializer): # For Admins
         instance.end_time = validated_data.get('end_time', instance.end_time)
         instance.is_active = validated_data.get('is_active', instance.is_active)
         
-
+ 
         instance.save()
         return instance
-
+ 
 # --- Vote Serializer ---
 class VoteSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField(read_only=True)
     election = serializers.StringRelatedField(read_only=True)
-
+ 
     election_id = serializers.PrimaryKeyRelatedField(
-        queryset=Election.objects.all(), 
+        queryset=Election.objects.all(),
         source='election', # This ensures data['election'] is an Election instance in validate/create
         write_only=True   
     )
     candidate_id = serializers.IntegerField(write_only=True)
-
+ 
     nonce = serializers.CharField(write_only=True, required=True, max_length=64) # This is for input ONLY
-
+ 
     class Meta:
         model = Vote
         fields = [
@@ -278,24 +281,24 @@ class VoteSerializer(serializers.ModelSerializer):
             'nonce'            
         ]
         read_only_fields = ['id', 'user', 'election', 'voted_at', 'encrypted_vote_data']
-
+ 
     def validate(self, data):
         user_casting_vote = self.context['request'].user
-        election_being_voted_in = data['election'] 
+        election_being_voted_in = data['election']
         candidate_id_selected = data['candidate_id']
-
+ 
         nonce_from_request = data['nonce'] # 'nonce' is now correctly in 'data'
         if not nonce_from_request:
             raise serializers.ValidationError({"nonce": "Nonce is required to reveal your commitment."})
-
+ 
         if not election_being_voted_in.is_open_for_voting:
             raise serializers.ValidationError("This election is not currently open for voting.")
-
+ 
         try:
             Candidate.objects.get(pk=candidate_id_selected, election=election_being_voted_in)
         except Candidate.DoesNotExist:
             raise serializers.ValidationError("Invalid candidate for this election.")
-
+ 
         if not election_being_voted_in.is_open_for_voting:
             raise serializers.ValidationError("This election is not currently open for voting.")
         
@@ -303,7 +306,7 @@ class VoteSerializer(serializers.ModelSerializer):
             Candidate.objects.get(pk=candidate_id_selected, election=election_being_voted_in)
         except Candidate.DoesNotExist:
             raise serializers.ValidationError("Invalid candidate for this election.")
-
+ 
         if Vote.objects.filter(user=user_casting_vote, election=election_being_voted_in).exists():
             raise serializers.ValidationError(
                 {"detail": "You have already voted in this election."}, code='already_voted'
@@ -313,7 +316,7 @@ class VoteSerializer(serializers.ModelSerializer):
             commitment_obj = VoteCommitment.objects.get(user=user_casting_vote, election=election_being_voted_in)
             if commitment_obj.is_revealed:
                 raise serializers.ValidationError("Your commitment for this election has already been revealed (voted).")
-
+ 
             vote_data_to_verify = {'candidate_id': candidate_id_selected, 'election_id': election_being_voted_in.id}
             is_valid_commitment = crypto_utils.verify_vote_commitment(
                 commitment_obj.commitment_hash,
@@ -330,19 +333,19 @@ class VoteSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Election is not configured for encrypted voting (missing public key).")
             
         return data
-
+ 
     def create(self, validated_data):
         # 'nonce' is an explicit serializer field but not a model field.
         # It will be present in validated_data if it passed validation.
         # We don't need to pop it if we are explicitly creating the Vote object
         # with only its model fields.
         
-        commitment_obj = validated_data.pop('commitment_obj') 
-
+        commitment_obj = validated_data.pop('commitment_obj')
+ 
         user = self.context['request'].user
-        election = validated_data['election'] 
+        election = validated_data['election']
         candidate_id = validated_data['candidate_id']
-
+ 
         vote_to_encrypt = {'candidate_id': candidate_id, 'election_id': election.id}
         
         public_key_obj = serialization.load_pem_public_key(
@@ -361,25 +364,25 @@ class VoteSerializer(serializers.ModelSerializer):
         commitment_obj.save()
         
         return vote
-
-
+ 
+ 
 # --- ElectionResultSerializer ---
 class ElectionResultSerializer(serializers.ModelSerializer):
      # 'results' will now come from the pre-tallied JSON stored on the Election model
-    results = serializers.SerializerMethodField() 
+    results = serializers.SerializerMethodField()
     signature = serializers.CharField(source='results_signature', read_only=True, allow_null=True)
     system_ed25519_public_key_b64 = serializers.SerializerMethodField() # To provide public key for verification
-
+ 
     class Meta:
         model = Election
         fields = [
-            'id', 
-            'name', 
+            'id',
+            'name',
             'results',      # The processed results with percentages
             'signature',    # The Ed25519 signature of the raw tallied results
             'system_ed25519_public_key_b64' # The system's public key to verify the signature
         ]
-
+ 
     def get_results(self, obj_election): # obj_election is the Election instance
         request = self.context.get('request')
         
@@ -392,7 +395,7 @@ class ElectionResultSerializer(serializers.ModelSerializer):
         
         if not can_view_results:
             return "Results are not available at this time."
-
+ 
         # --- Display Pre-Tallied Results (from tallied_results_json) ---
         if not obj_election.tallied_results_json: # Check if tallying has been performed and results stored
             # If votes exist but haven't been tallied, give a different message
@@ -406,13 +409,13 @@ class ElectionResultSerializer(serializers.ModelSerializer):
             
             if not raw_tallied_results: # If the JSON was empty (e.g., "{}")
                 return "No votes were tallied for any candidate."
-
+ 
             total_votes_tallied = sum(raw_tallied_results.values())
             
             # Format results with percentages for display
             results_with_percentage = {
                 candidate_name: {
-                    "votes": count, 
+                    "votes": count,
                     "percentage": f"{(count / total_votes_tallied * 100):.1f}%" if total_votes_tallied > 0 else "0.0%"
                 }
                 for candidate_name, count in raw_tallied_results.items()
@@ -423,7 +426,7 @@ class ElectionResultSerializer(serializers.ModelSerializer):
         except Exception as e:
             print(f"Error processing tallied results for election {obj_election.id}: {e}")
             return "An error occurred while preparing results for display."
-
+ 
     def get_system_ed25519_public_key_b64(self, obj):
         # Provide the system's public key (Base64 encoded) for frontend verification display
         try:
@@ -438,10 +441,10 @@ class ElectionResultSerializer(serializers.ModelSerializer):
             return None
 class VoteCommitmentRequestSerializer(serializers.Serializer):
     election_id = serializers.IntegerField(write_only=True)
-    candidate_id = serializers.IntegerField(write_only=True) 
+    candidate_id = serializers.IntegerField(write_only=True)
     nonce = serializers.CharField(write_only=True, max_length=64) # Assuming nonce is a string (e.g., hex or base64)
-
-
+ 
+ 
     def validate_election_id(self, value):
         try:
             election = Election.objects.get(pk=value)
@@ -450,7 +453,7 @@ class VoteCommitmentRequestSerializer(serializers.Serializer):
             return election
         except Election.DoesNotExist:
             raise serializers.ValidationError("Election not found.")
-
+ 
     def validate_candidate_id(self, value):
         election = self.initial_data.get('election_id') # Get the raw election_id first
         if election:
@@ -463,7 +466,7 @@ class VoteCommitmentRequestSerializer(serializers.Serializer):
             except ValueError:
                  raise serializers.ValidationError("Invalid election_id format for candidate check.")
         return value
-
+ 
     def validate(self, data):
         user = self.context['request'].user
         election = data['election_id'] # This is now an Election instance from validate_election_id

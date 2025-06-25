@@ -30,7 +30,7 @@ SYSTEM_ED25519_PUBLIC_KEY_B64 = os.environ.get('SYSTEM_ED25519_PUBLIC_KEY_B64')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gtuevoting.com']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -56,8 +56,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # Creates a 'media' folder in your 
 # 'corsheaders.middleware.CorsMiddleware',
 
 # For development, allow all origins. For production, be specific!
-CORS_ALLOW_ALL_ORIGINS = True # Or CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+CORS_ALLOWED_ORIGINS = [
+        "https://gtuevoting.com",  # React dev server
+]
 
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -189,4 +192,4 @@ EMAIL_HOST_USER = 'evotingsystemtest@gmail.com'  # Your full Gmail address
 EMAIL_HOST_PASSWORD = 'gtcy zvhk orox mpfu' # The app password you generated (OR your regular password if no 2FA and less secure access is on)
 DEFAULT_FROM_EMAIL = 'E-Voting System <evotingsystemtest@gmail.com>' # What users see as sender
 
-FRONTEND_URL = 'http://localhost:3000' # Change for production
+FRONTEND_URL = 'https://gtuevoting.com' # Change for production

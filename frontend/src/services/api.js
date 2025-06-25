@@ -2,7 +2,7 @@ import axios from "axios";
 import authService from "./authService";
 // import jwt_decode from 'jwt-decode'; // You might need this for token expiration checks
 
-const API_URL = "http://127.0.0.1:8000/api/";
+const API_URL = "https://gtuevoting.com/api/";
 
 const apiClient = axios.create({
   baseURL: API_URL,

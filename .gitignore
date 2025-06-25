@@ -22,5 +22,11 @@
 /frontend/yarn-debug.log*
 /frontend/yarn-error.log*
 
-/venv
+/.venv
 /node_modules
+/backend/accounts/__pycache__
+/backend/backend/__pycache__
+/backend/e_voting/__pycache__
+/backend/voting/__pycache__
+/backend/accounts/migrations/__pycache__
+/backend/voting/migrations/__pycache__
