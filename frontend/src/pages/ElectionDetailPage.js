@@ -25,6 +25,21 @@ function ElectionDetailPage() {
   const [isCommitting, setIsCommitting] = useState(false);
   const [isCastingVote, setIsCastingVote] = useState(false);
 
+  const isAdmin = authService.isAdmin(); // Check if the current user is an admin
+
+  const canViewResults = () => {
+    if (isAdmin) { // Admins can always try to view results (backend will control actual data visibility)
+      return true;
+    }
+    // For regular users, only show if election is closed AND results are meant to be public
+    // This assumes 'election.is_open_for_voting' is false when closed
+    // You might add another flag like 'election.results_published' from backend if needed
+    if (election && !election.is_open_for_voting) {
+      return true; // Example: allow any user to see results if election is closed
+    }
+    return false;
+  };
+
   const generateNonce = () => {
     // Use a cryptographically strong random number generator if possible
     if (window.crypto && window.crypto.getRandomValues) {
@@ -338,9 +353,20 @@ function ElectionDetailPage() {
         >
           Back to Elections
         </button>
-        <button onClick={handleShowResults} className="button-secondary">
-          View Results
-        </button>
+        {election && canViewResults() && ( // Check if election data is loaded and user can view
+          <button 
+            onClick={() => {
+              if (isAdmin) {
+                navigate(`/admin/results/${electionId}`); // Admin goes to admin results page
+              } else {
+                navigate(`/elections/${electionId}/public-results`); // Voter goes to public results page
+              }
+            }}
+            className="button-secondary"
+          >
+            View Results
+          </button>
+        )}
       </div>
 
       {/* Confirmation Modal for Voting */}

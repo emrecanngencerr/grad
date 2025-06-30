@@ -26,6 +26,7 @@ import ProfileDropdown from "./components/ProfileDropdown";
 import ManageProfilePage from "./pages/ManageProfilePage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import PublicResultsPage from './pages/PublicResultsPage'; // <<< NEW IMPORT
 
 // Service Imports
 import authService from "./services/authService";
@@ -159,6 +160,7 @@ function AppContent() {
               path="/elections/:electionId"
               element={<ElectionDetailPage />}
             />
+            <Route path="/elections/:electionId/public-results" element={<PublicResultsPage />} /> {/* <<< NEW ROUTE */}
             <Route
               path="/admin/results/:electionId"
               element={<AdminResultsPage />}
